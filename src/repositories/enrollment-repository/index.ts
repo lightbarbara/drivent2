@@ -27,9 +27,19 @@ async function upsert(
 export type CreateEnrollmentParams = Omit<Enrollment, "id" | "createdAt" | "updatedAt">;
 export type UpdateEnrollmentParams = Omit<CreateEnrollmentParams, "userId">;
 
+async function validateUserEnrolled(userId: number) {
+  const userEnrolled = await prisma.enrollment.findFirst({
+    where: {
+      userId
+    }
+  });
+  return userEnrolled;
+}
+
 const enrollmentRepository = {
   findWithAddressByUserId,
   upsert,
+  validateUserEnrolled
 };
 
 export default enrollmentRepository;

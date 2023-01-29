@@ -81,10 +81,19 @@ export type CreateOrUpdateEnrollmentWithAddress = CreateEnrollmentParams & {
   address: CreateAddressParams;
 };
 
+async function validateUserEnrolled(userId: number) {
+  const userEnrolled = await enrollmentRepository.validateUserEnrolled(userId);
+  if (!userEnrolled) {
+    throw notFoundError();
+  }
+  return userEnrolled;
+}
+
 const enrollmentsService = {
   getOneWithAddressByUserId,
   createOrUpdateEnrollmentWithAddress,
-  getAddressFromCEP
+  getAddressFromCEP,
+  validateUserEnrolled
 };
 
 export default enrollmentsService;
