@@ -1,4 +1,4 @@
-import { notFoundError } from "@/errors";
+import { conflictError, notFoundError } from "@/errors";
 import ticketRepository from "@/repositories/ticket-repository";
 import { Ticket } from "@prisma/client";
 
@@ -25,9 +25,18 @@ async function getUserTicket(enrollmentId: number) {
   return returnedTicket;
 }
 
+async function userHasTicket(enrollmentId: number) {
+  const userHasTicket = await ticketRepository.getTicket(enrollmentId);
+
+  if (userHasTicket) {
+    throw conflictError("User already has a ticket");
+  }
+}
+
 const ticketsService = {
   createUserTicket,
-  getUserTicket
+  getUserTicket,
+  userHasTicket
 };
 
 export default ticketsService;
