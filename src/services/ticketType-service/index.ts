@@ -1,6 +1,11 @@
 import { notFoundError } from "@/errors";
 import ticketTypeRepository from "@/repositories/ticketType-repository";
 
+async function getAllTicketTypes() {
+  const ticketTypes = await ticketTypeRepository.findAll();
+  return ticketTypes;
+}
+
 async function findTicketTypeId(ticketTypeId: number) {
   const ticketType = await ticketTypeRepository.findFirst(ticketTypeId);
 
@@ -10,6 +15,7 @@ async function findTicketTypeId(ticketTypeId: number) {
 }
 
 const ticketTypeService = {
+  getAllTicketTypes,
   findTicketTypeId,
 };
 

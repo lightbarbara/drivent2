@@ -1,5 +1,9 @@
 import { prisma } from "@/config";
 
+async function findAll() {
+  return prisma.ticketType.findMany();
+}
+
 async function findFirst(ticketTypeId: number) {
   return prisma.ticketType.findFirst({
     where: {
@@ -9,6 +13,7 @@ async function findFirst(ticketTypeId: number) {
 }
 
 const ticketTypeRepository = {
+  findAll,
   findFirst
 };
 

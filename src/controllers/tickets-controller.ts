@@ -15,3 +15,7 @@ export async function createUserTicket(req: AuthenticatedRequest, res: Response)
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }
 }
+
+export async function getUserTicket(req: AuthenticatedRequest, res: Response) {
+  console.log("oi");
+}
