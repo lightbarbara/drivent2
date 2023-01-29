@@ -7,7 +7,7 @@ async function getAllTicketTypes() {
 }
 
 async function findTicketTypeId(ticketTypeId: number) {
-  const ticketType = await ticketTypeRepository.findFirst(ticketTypeId);
+  const ticketType = await ticketTypeRepository.findTicket(ticketTypeId);
 
   if (!ticketType) {
     throw notFoundError();

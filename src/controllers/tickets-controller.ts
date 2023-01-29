@@ -17,5 +17,12 @@ export async function createUserTicket(req: AuthenticatedRequest, res: Response)
 }
 
 export async function getUserTicket(req: AuthenticatedRequest, res: Response) {
-  console.log("oi");
+  const { enrollmentId } = res.locals;
+  try {
+    const returnedTicket = await ticketsService.getUserTicket(enrollmentId);
+
+    return res.status(httpStatus.OK).send(returnedTicket);
+  } catch (err) {
+    return res.sendStatus(httpStatus.NOT_FOUND);
+  }
 }
