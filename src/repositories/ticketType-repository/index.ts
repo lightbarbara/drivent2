@@ -14,7 +14,7 @@ async function findTicket(ticketTypeId: number) {
 
 const ticketTypeRepository = {
   findAll,
-  findTicket
+  findTicket,
 };
 
 export default ticketTypeRepository;

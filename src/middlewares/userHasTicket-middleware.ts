@@ -7,7 +7,7 @@ export async function validateUserHasTicket(req: AuthenticatedRequest, res: Resp
   const { enrollmentId } = res.locals;
 
   try {
-    const userHasTicket = await ticketsService.userHasTicket(enrollmentId);
+    await ticketsService.userHasTicket(enrollmentId);
 
     next();
   } catch (err) {
