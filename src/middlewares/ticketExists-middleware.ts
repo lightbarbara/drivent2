@@ -4,7 +4,11 @@ import httpStatus from "http-status";
 import { AuthenticatedRequest } from "./authentication-middleware";
 
 export async function validateTicketId(req: AuthenticatedRequest, res: Response, next: NextFunction) {
-  const { ticketId } = req.body;
+  let { ticketId } = req.body;
+
+  if (!ticketId) {
+    ticketId = res.locals.ticketId;
+  }
 
   try {
     await ticketsService.findTicketById(ticketId);

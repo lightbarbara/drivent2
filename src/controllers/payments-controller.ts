@@ -15,3 +15,14 @@ export async function createPaymentToTicket(req: AuthenticatedRequest, res: Resp
   }
 }
 
+export async function getPaymentForTicket(req: AuthenticatedRequest, res: Response) {
+  const { ticketId } = res.locals;
+
+  try {
+    const payment = await paymentsService.getPaymentForTicket(parseInt(ticketId));
+
+    res.status(httpStatus.OK).send(payment);
+  } catch (err) {
+    res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+}

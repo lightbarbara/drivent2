@@ -36,7 +36,9 @@ async function userHasTicket(enrollmentId: number) {
 }
 
 async function findTicketById(ticketId: number) {
-  const ticketExists = await ticketRepository.getTicketById(ticketId);
+  const newId = Number(ticketId);
+
+  const ticketExists = await ticketRepository.getTicketById(newId);
 
   if (!ticketExists) {
     throw notFoundError();

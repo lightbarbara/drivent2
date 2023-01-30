@@ -11,6 +11,14 @@ async function userDoesntHaveTicket(enrollmentId: number, ticketId: number) {
   }
 }
 
+async function userDoesntHaveTicketIdOnHistory(enrollmentId: number, ticketId: number) {
+  const userDoesntHaveTicket = await paymentRepository.findFirst(enrollmentId, ticketId);
+
+  if (!userDoesntHaveTicket.id) {
+    throw unauthorizedError();
+  }
+}
+
 async function createPaymentToTicket(payment: PaymentCreate) {
   const value = (await ticketRepository.getTicketById(payment.ticketId)).TicketType.price;
 
@@ -30,9 +38,17 @@ async function createPaymentToTicket(payment: PaymentCreate) {
   return paymentToTicket;
 }
 
+async function getPaymentForTicket(ticketId: number) {
+  const payment = await paymentRepository.getPaymentForTicket(ticketId);
+
+  return payment;
+}
+
 const paymentsService = {
   userDoesntHaveTicket,
-  createPaymentToTicket
+  createPaymentToTicket,
+  getPaymentForTicket,
+  userDoesntHaveTicketIdOnHistory
 };
 
 export default paymentsService;

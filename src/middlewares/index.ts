@@ -6,3 +6,5 @@ export * from "./ticketTypeExists-middleware";
 export * from "./userHasTicket-middleware";
 export * from "./userDoesntHaveTicket-middleware";
 export * from "./ticketExists-middleware";
+export * from "./ticketIdOnQuery-middleware";
+export * from "./userHasTicketId-middleware";

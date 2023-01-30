@@ -35,10 +35,19 @@ async function updateTicketStatus(payment: Omit<Payment, "id">) {
   });
 }
 
+async function getPaymentForTicket(ticketId: number) {
+  return await prisma.payment.findFirst({
+    where: {
+      ticketId
+    }
+  });
+}
+
 const paymentRepository = {
   findFirst,
   createPaymentToTicket,
-  updateTicketStatus
+  updateTicketStatus,
+  getPaymentForTicket
 };
 
 export default paymentRepository;
