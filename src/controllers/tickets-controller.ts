@@ -10,7 +10,7 @@ export async function createUserTicket(req: AuthenticatedRequest, res: Response)
   try {
     const returnedTicket = await ticketsService.createUserTicket(ticketTypeId, enrollmentId);
 
-    return res.status(httpStatus.OK).send(returnedTicket);
+    return res.status(httpStatus.CREATED).send(returnedTicket);
   } catch (err) {
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }
