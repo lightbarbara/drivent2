@@ -19,7 +19,6 @@ export async function postCreateOrUpdateEnrollment(req: AuthenticatedRequest, re
   try {
     await enrollmentsService.createOrUpdateEnrollmentWithAddress({
       ...req.body,
-      birthday: new Date(req.body.birthday),
       userId: req.userId,
     });
 
