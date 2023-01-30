@@ -7,10 +7,39 @@ async function create(ticket: Omit<Ticket, "id">) {
   });
 }
 
+async function getAllUserTickets(enrollmentId: number) {
+  const ticket = await prisma.ticket.findMany({
+    where: {
+      enrollmentId
+    },
+    select: {
+      id: true,
+      status: true,
+      ticketTypeId: true,
+      enrollmentId: true,
+      TicketType: {
+        select: {
+          id: true,
+          name: true,
+          price: true,
+          isRemote: true,
+          includesHotel: true,
+          createdAt: true,
+          updatedAt: true
+        }
+      },
+      createdAt: true,
+      updatedAt: true
+    }
+  });
+  return ticket;
+}
+
 async function getTicket(enrollmentId: number) {
   const ticket = await prisma.ticket.findFirst({
     where: {
-      enrollmentId
+      enrollmentId,
+      status: "RESERVED"
     },
     select: {
       id: true,
@@ -53,7 +82,8 @@ async function getTicketById(id: number) {
 const ticketRepository = {
   create,
   getTicket,
-  getTicketById
+  getTicketById,
+  getAllUserTickets
 };
 
 export default ticketRepository;

@@ -26,17 +26,28 @@ async function getUserTicket(enrollmentId: number) {
 }
 
 async function userHasTicket(enrollmentId: number) {
-  const userHasTicket = await ticketRepository.getTicket(enrollmentId);
+  const userHasTicketUnpaid = await ticketRepository.getAllUserTickets(enrollmentId);
+  
+  const ticketsUnpaid = userHasTicketUnpaid.filter(t => t.status !== "PAID");
 
-  if (userHasTicket) {
-    throw conflictError("User already has a ticket");
+  if (ticketsUnpaid.length > 0) {
+    throw conflictError("User already has a ticket unpaid");
+  }
+}
+
+async function findTicketById(ticketId: number) {
+  const ticketExists = await ticketRepository.getTicketById(ticketId);
+
+  if (!ticketExists) {
+    throw notFoundError();
   }
 }
 
 const ticketsService = {
   createUserTicket,
   getUserTicket,
-  userHasTicket
+  userHasTicket,
+  findTicketById
 };
 
 export default ticketsService;
